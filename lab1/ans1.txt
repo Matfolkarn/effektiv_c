@@ -1,0 +1,20 @@
+13: Nothing strange happens, it seems to run anyway. 
+
+14: ==288== Invalid write of size 8
+==288==    at 0x48BABB3: __vfscanf_internal (vfscanf-internal.c:2450)
+==288==    by 0x48B6161: __isoc99_scanf (isoc99_scanf.c:30)
+==288==    by 0x109370: main (hello_world.c:39)
+==288==  Address 0x4a494c8 is 0 bytes after a block of size 8 alloc'd
+==288==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==288==    by 0x10930B: main (hello_world.c:29)
+==288==
+max z =      1.000 * x0==288== Invalid read of size 8
+==288==    at 0x10944A: main (hello_world.c:55)
+==288==  Address 0x4a494c8 is 0 bytes after a block of size 8 alloc'd
+==288==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==288==    by 0x10930B: main (hello_world.c:29)
+
+
+15:
+==301==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000018 at pc 0x7fb6694c54ed bp 0x7ffe5536d280 sp 0x7ffe5536ca08
+WRITE of size 8 at 0x602000000018 thread T0
