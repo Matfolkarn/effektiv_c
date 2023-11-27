@@ -11,8 +11,6 @@ int main(int argc, char** argv)
 	
 	printf("m = %d, n = %d\n", m, n);
 	
-	fflush(stdout);
-	
 	double** make_matrix(int m, int n)
 	{
 		double** a;
@@ -26,9 +24,9 @@ int main(int argc, char** argv)
 
 	
 
-	double* c_values = calloc(n-1, sizeof(double));
+	double* c_values = calloc(n, sizeof(double));
 	double** a_values = make_matrix(m,n);	
-	double* b_values = calloc(n,sizeof(double));
+	double* b_values = calloc(m,sizeof(double));
 	
 	int i;
 	double* c;
@@ -77,6 +75,12 @@ int main(int argc, char** argv)
 	}
 	printf("\n");
 	fflush(stdout);
+	free(c_values);
+	for(i = 0;i <m;i++ ){
+		free(a_values[i]);
+	}
+	free(a_values);
+	free(b_values);
 	
 }	
 

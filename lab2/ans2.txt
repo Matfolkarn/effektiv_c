@@ -1,0 +1,6 @@
+Up- move up call stack
+down - move down call stack
+diplay- display value of variable
+
+next - excecute until next source line
+step - excecute until next source line and enter it, if possible.

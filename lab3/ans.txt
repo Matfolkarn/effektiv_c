@@ -1,0 +1,38 @@
+2.) x1 = 5 -x0 => x1 + x0 = 5
+ => -x1 -x0 < 5
+a_20 = -1
+a_21 = -1
+b_2 =5
+
+NO, the value will still be 16
+
+6.) Yes, valgrind complains: 
+
+Use of uninitialised value of size 8
+==441==    at 0x109D25: initial (in /mnt/c/Users/Hampus/git/effektiv_c/lab3/a.out)
+==441==    by 0x10A38C: xsimplex (in /mnt/c/Users/Hampus/git/effektiv_c/lab3/a.out)
+==441==    by 0x10A6D2: simplex (in /mnt/c/Users/Hampus/git/effektiv_c/lab3/a.out)
+==441==    by 0x10A950: main (in /mnt/c/Users/Hampus/git/effektiv_c/lab3/a.out)
+==441==
+
+7) No, Valgrind does not keep track of local variables. However it does state that:
+
+"Conditional jump or move depends on uninitialised value(s)"
+
+8) 
+*** stack smashing detected ***: terminated
+
+9)
+No error is given.
+
+10)
+Basically same error.
+
+local variable:
+==626==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7fff9a3e8a48 at pc 0x560eb8f31a42 bp 0x7fff9a3e89c0 sp 0x7fff9a3e89b0
+
+global:
+
+==651==ERROR: AddressSanitizer: global-buffer-overflow on address 0x55dd9dc2d3c8 at pc 0x55dd9dc279ac bp 0x7ffd7a233e10 sp 0x7ffd7a233e00
+WRITE of size 4 at 0x55dd9dc2d3c8 thread T0
+
