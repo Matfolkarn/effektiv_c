@@ -1,1 +1,48 @@
 1)
+
+CPU: ppc64 POWER8, speed 3491 MHz (estimated)
+Counted CYCLES events (Cycles) with a unit mask of 0x00 (No unit mask) count 100000
+samples  %        image name               symbol name
+111      32.3615  libc-2.27.so             vfprintf@@GLIBC_2.17
+73       21.2828  libc-2.27.so             __GI___printf_fp_l
+26        7.5802  libc-2.27.so             _IO_file_xsputn@@GLIBC_2.17
+13        3.7901  libc-2.27.so             __overflow
+12        3.4985  libc-2.27.so             __memcpy_power7
+11        3.2070  a.out                    pivot
+11        3.2070  libc-2.27.so             __mpn_divrem
+11        3.2070  libc-2.27.so             __strchrnul_power8
+10        2.9155  libc-2.27.so             _IO_file_overflow@@GLIBC_2.17
+10        2.9155  libc-2.27.so             _IO_padn
+8         2.3324  libc-2.27.so             __mpn_mul_1
+7         2.0408  libc-2.27.so             hack_digit
+5         1.4577  libc-2.27.so             __GI_mempcpy
+4         1.1662  libc-2.27.so             __mpn_lshift
+3         0.8746  libc-2.27.so             _itoa_word
+
+6.)
+It gives statistics of my functions, how many times they whre called etc.
+
+7) Gcov prints the number of times each line was excecuted.
+
+the -b option tells us the ratio of each branch, for example what is the percentage of an if statement being true
+
+
+8)
+
+==47844==
+==47844== I   refs:      50,385,171
+==47844== I1  misses:       417,451
+==47844== LLi misses:         1,328
+==47844== I1  miss rate:       0.83%
+==47844== LLi miss rate:       0.00%
+==47844==
+==47844== D   refs:      15,474,415  (9,352,225 rd   + 6,122,190 wr)
+==47844== D1  misses:         7,541  (    6,227 rd   +     1,314 wr)
+==47844== LLd misses:         2,094  (    1,425 rd   +       669 wr)
+==47844== D1  miss rate:        0.0% (      0.1%     +       0.0%  )
+==47844== LLd miss rate:        0.0% (      0.0%     +       0.0%  )
+==47844==
+==47844== LL refs:          424,992  (  423,678 rd   +     1,314 wr)
+==47844== LL misses:          3,422  (    2,753 rd   +       669 wr)
+==47844== LL miss rate:         0.0% (      0.0%     +       0.0%  )
+
