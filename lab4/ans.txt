@@ -1,48 +1,107 @@
-1)
+
+preport:
+CPU: ppc64 POWER8, speed 3491 MHz (estimated)
+Counted CYCLES events (Cycles) with a unit mask of 0x00 (No unit mask) count 100000
+    CYCLES:100000|
+  samples|      %|
+------------------
+   420509 100.000 a.out
+            CYCLES:100000|
+          samples|      %|
+        ------------------
+           418285 99.4711 a.out
+             2172  0.5165 libc-2.27.so
+               28  0.0067 kallsyms
+               20  0.0048 libm-2.27.so
+                4 9.5e-04 ld-2.27.so
+
+opreport -t 0.7 -l
 
 CPU: ppc64 POWER8, speed 3491 MHz (estimated)
 Counted CYCLES events (Cycles) with a unit mask of 0x00 (No unit mask) count 100000
-samples  %        image name               symbol name
-111      32.3615  libc-2.27.so             vfprintf@@GLIBC_2.17
-73       21.2828  libc-2.27.so             __GI___printf_fp_l
-26        7.5802  libc-2.27.so             _IO_file_xsputn@@GLIBC_2.17
-13        3.7901  libc-2.27.so             __overflow
-12        3.4985  libc-2.27.so             __memcpy_power7
-11        3.2070  a.out                    pivot
-11        3.2070  libc-2.27.so             __mpn_divrem
-11        3.2070  libc-2.27.so             __strchrnul_power8
-10        2.9155  libc-2.27.so             _IO_file_overflow@@GLIBC_2.17
-10        2.9155  libc-2.27.so             _IO_padn
-8         2.3324  libc-2.27.so             __mpn_mul_1
-7         2.0408  libc-2.27.so             hack_digit
-5         1.4577  libc-2.27.so             __GI_mempcpy
-4         1.1662  libc-2.27.so             __mpn_lshift
-3         0.8746  libc-2.27.so             _itoa_word
+samples  %        symbol name
+388256   92.3300  pivot
+20274     4.8213  xsimplex
+3528      0.8390  initial
+
+opannotate
+/*
+ * Command line: opannotate -s -a
+ *
+ * Interpretation of command line:
+ * Output annotated assembly listing with samples
+ *
+ * CPU: ppc64 POWER8, speed 3491 MHz (estimated)
+ * Counted CYCLES events (Cycles) with a unit mask of 0x00 (No unit mask) count 100000
+ */
+               :
+               :/lib/powerpc64le-linux-gnu/libm-2.27.so:     file format elf64-powerpcle
+               :
+               :
+               :Disassembly of section .text:
+               :
+00000000000c1fe0 <__nldbl_nexttowardf@@GLIBC_2.17+0x14e0>: /* __llround_power8 total:     20  0.0048 */
+    20  0.0048 :   c1fe0:       frin    f1,f1
+               :   c1fe4:       fctidz  f1,f1
+               :   c1fe8:       mfvsrd  r3,vs1
+               :   c1fec:       blr
+               :        ...
+               :   c1ff8:       .long 0xc2040
+               :   c1ffc:       .long 0x10
+               :   c2000:       rlwnm   r31,r26,r0,0,8
+               :   c2004:       xoris   r18,r27,27756
+               :   c2008:       rlwnm.  r4,r27,r13,25,26
+               :   c200c:       oris    r23,r11,28528
+               :   c2010:       .long 0x3872
+
 
 6.)
-It gives statistics of my functions, how many times they whre called etc.
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls  ms/call  ms/call  name
+  0.0       0.00     0.00       28     0.00     0.00  print_values [1]
+  0.0       0.00     0.00       28     0.00     0.00  select_nonbasic [2]
+  0.0       0.00     0.00       27     0.00     0.00  pivot [3]
+  0.0       0.00     0.00        2     0.00     0.00  extend [4]
+  0.0       0.00     0.00        1     0.00     0.00  bound [5]
+  0.0       0.00     0.00        1     0.00     0.00  init [6]
+  0.0       0.00     0.00        1     0.00     0.00  initial [7]
+  0.0       0.00     0.00        1     0.00     0.00  linked_list_pop [8]
+  0.0       0.00     0.00        1     0.00     0.00  make_matrix [9]
+  0.0       0.00     0.00        1     0.00     0.00  read_input [10]
+  0.0       0.00     0.00        1     0.00     0.00  simplex [11]
+  0.0       0.00     0.00        1     0.00     0.00  succ [12]
+  0.0       0.00     0.00        1     0.00     0.00  xsimplex [13]
 
-7) Gcov prints the number of times each line was excecuted.
+What does it mean?
 
-the -b option tells us the ratio of each branch, for example what is the percentage of an if statement being true
+7.)
+This will create a file intopt.c.gcov. What does it contain how and can you use this information?
+it contains information about each branch, if it excecuted or not
 
+gcov -b intopt.c:
+Lines executed:0.00% of 398
+Branches executed:0.00% of 234
+Taken at least once:0.00% of 234
+Calls executed:0.00% of 47
+Creating '2s.c.gcov'
 
 8)
+==44163==
+==44163== I   refs:      13,177,793,963
+==44163== I1  misses:         1,608,602
+==44163== LLi misses:             1,182
+==44163== I1  miss rate:           0.01%
+==44163== LLi miss rate:           0.00%
+==44163==
+==44163== D   refs:       4,548,903,019  (3,738,688,431 rd   + 810,214,588 wr)
+==44163== D1  misses:        12,126,817  (   11,358,347 rd   +     768,470 wr)
+==44163== LLd misses:            14,419  (        1,460 rd   +      12,959 wr)
+==44163== D1  miss rate:            0.3% (          0.3%     +         0.1%  )
+==44163== LLd miss rate:            0.0% (          0.0%     +         0.0%  )
+==44163==
+==44163== LL refs:           13,735,419  (   12,966,949 rd   +     768,470 wr)
+==44163== LL misses:             15,601  (        2,642 rd   +      12,959 wr)
+==44163== LL miss rate:             0.0% (          0.0%     +         0.0%  )
 
-==47844==
-==47844== I   refs:      50,385,171
-==47844== I1  misses:       417,451
-==47844== LLi misses:         1,328
-==47844== I1  miss rate:       0.83%
-==47844== LLi miss rate:       0.00%
-==47844==
-==47844== D   refs:      15,474,415  (9,352,225 rd   + 6,122,190 wr)
-==47844== D1  misses:         7,541  (    6,227 rd   +     1,314 wr)
-==47844== LLd misses:         2,094  (    1,425 rd   +       669 wr)
-==47844== D1  miss rate:        0.0% (      0.1%     +       0.0%  )
-==47844== LLd miss rate:        0.0% (      0.0%     +       0.0%  )
-==47844==
-==47844== LL refs:          424,992  (  423,678 rd   +     1,314 wr)
-==47844== LL misses:          3,422  (    2,753 rd   +       669 wr)
-==47844== LL miss rate:         0.0% (      0.0%     +       0.0%  )
-
+I: instrutions
+LL: cache misses and miss rated:
